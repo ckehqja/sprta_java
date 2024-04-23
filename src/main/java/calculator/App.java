@@ -2,34 +2,40 @@ package calculator;
 
 import java.util.Scanner;
 
+import static java.lang.Integer.parseInt;
+
 public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int result;
 
-        System.out.print("첫 번째 숫자를 입력하세요: ");
-        // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
-        int a = typeCheck(sc);
+        while (true) {
+            System.out.print("첫 번째 숫자를 입력하세요: ");
+            // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
+            int a = typeCheck(sc);
 
-        System.out.print("두 번째 숫자를 입력하세요: ");
-        // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
-        int b = typeCheck(sc);
+            System.out.print("두 번째 숫자를 입력하세요: ");
+            // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
+            int b = typeCheck(sc);
 
-        // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다.
-        System.out.print("사칙연산 기호를 입력하세요: ");
-        char operation = operationCheck(sc);
+            // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다.
+            System.out.print("사칙연산 기호를 입력하세요: ");
+            char operation = operationCheck(sc);
 
-        //사용자에게 입력받은 값을 출력
-        System.out.println("a = " + a);
-        System.out.println("b = " + b);
-        System.out.println("operation = " + operation);
+            //operation 같은 값을 찾아서 연산후 result에 초기화
+            result = calculate(operation, a, b);
+            System.out.printf("%d %c %d = %d\n", a, operation, b, result);
 
-        //operation 같은 값을 찾아서 연산후 result에 초기화
-        result = calculate(operation, a, b);
-        System.out.println("result = " + result);
+            //exit 입력 시 반복문 중단
+            System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
+            String exit;
+            exit = sc.nextLine();
+            if (exit.equals("exit")) {break;}
+        }
 
     }
 
+    //switch문을 사용해서 사칙연산중 하나를 골라 연산
     private static int calculate(char operation, int a, int b) {
         int result;
         result = switch (operation) {
@@ -42,12 +48,13 @@ public class App {
         return result;
     }
 
+    //입력받은 값을 사칙연상중 하나 확인하고 반환
     private static char operationCheck(Scanner sc) {
         boolean isOperation = false;
         char operations;
         do {
             System.out.println("사칙연산 중 하나를 입력해주세요(-, +, *, /");
-            operations = sc.next().charAt(0);
+            operations = sc.nextLine().charAt(0); //sc.next() 인한 스킵현상으로 변경
             if(operations == '+' || operations == '-' || operations == '*' || operations == '/') {
                 isOperation = true;
             }
@@ -59,7 +66,7 @@ public class App {
     static int typeCheck(Scanner sc) {
         int a;
         do {
-            a = sc.nextInt();
+            a = parseInt(sc.nextLine());//sc,nextInt() 인한 스킵현상으로 변경
             if (a < 0) {
                 System.out.println("0을 포함한 양수를 입력해 주세요");
             }
