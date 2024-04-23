@@ -3,16 +3,14 @@ package calculator;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Scanner;
-import java.util.Stack;
 
 import static java.lang.Integer.parseInt;
 
 public class App {
-    static int count = 0;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int result;
-        Deque<Integer> basket = new ArrayDeque<Integer>();
+        Deque<Integer> basket = new ArrayDeque<>();
 
         while (true) {
             System.out.print("첫 번째 숫자를 입력하세요: ");
@@ -32,18 +30,27 @@ public class App {
             System.out.printf("%d %c %d = %d\n", a, operation, b, result);
             //무한정 저장
             basket.push(result);
-
-            //컬렉션 출력
-            printBasket(basket);
+            
 
             //최근 결과 삭제
             System.out.println("가장 먼저 저장된 연산 결과를 삭제하시겠습니까? (remove 입력 시 삭제)");
             removeBasket(sc, basket);
 
-            //exit 입력 시 반복문 중단
-            if (extracted(sc)) break;
-        }
+            //컬렉션 출력
+            System.out.println("저장된 연산결과를 조회하시겠습니까? (inquiry 입력 시 조회)");
+            inquiryPrint(sc, basket);
 
+
+            //exit 입력 시 반복문 중단
+            System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
+            if (exitMethod(sc)) break;
+        }
+    }
+
+    //컬렉션 출력
+    private static void inquiryPrint(Scanner sc, Deque<Integer> basket) {
+        String inquiry = sc.nextLine();
+        if (inquiry.equals("inquiry")) printBasket(basket);
     }
 
     //컬렉션 출력
@@ -57,14 +64,13 @@ public class App {
     private static void removeBasket(Scanner sc, Deque<Integer> basket) {
         String remove = sc.nextLine();
         if (remove.equals("remove")) {
-            int removeNum = (int)basket.pop();
+            int removeNum = basket.pop();
             System.out.println(removeNum + " 삭제되었습니다.");
         } else System.out.println("삭제되지 않았습니다.");
     }
 
     //exit 입력 시 반복문 중단
-    private static boolean extracted(Scanner sc) {
-        System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
+    private static boolean exitMethod(Scanner sc) {
         String exit;
         exit = sc.nextLine();
         return exit.equals("exit");
@@ -90,7 +96,7 @@ public class App {
         do {
             System.out.println("사칙연산 중 하나를 입력해주세요(-, +, *, /");
             operations = sc.nextLine().charAt(0); //sc.next() 인한 스킵현상으로 변경
-            if(operations == '+' || operations == '-' || operations == '*' || operations == '/') {
+            if (operations == '+' || operations == '-' || operations == '*' || operations == '/') {
                 isOperation = true;
             }
         } while (!isOperation);
