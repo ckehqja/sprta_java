@@ -32,43 +32,36 @@ public class App {
                 //무한정 저장
                 basket.push(result);
 
-                System.out.println("최근 연산 결과 삭제 re, 연산결과 조회 in, 종료 ex, 계속 아무키나 입력");
-                String res = sc.nextLine();
 
-                switch (res) {
-                    case "re" -> {
+
+                while(true) {
+                    System.out.println("최근 연산 결과 삭제 re, 연산결과 조회 in, 종료 ex, 계속 아무키나 입력");
+                    String res = sc.nextLine();
+
+                    if (res.equals("re")) {
+                        //최근 결과 삭제
                         Integer reNum = basket.pop();
                         System.out.println(reNum + "삭제되었습니다.");
-                    }
-                    case "in" -> {
+                    } else if (res.equals("in")) {
+                        //결과 리스트
                         System.out.print("basket = [ ");
                         for (Integer i : basket) {
                             System.out.print(i + ", ");
-                            System.out.println(" ] ");
                         }
-                    }
-                    case "ex" -> {
+                        System.out.println(" ] ");
+
+                    } else if (res.equals("ex")) {
+                        //오류를 발생시켜 전체 종료
                         throw new Exception("exit");
+                    } else {
+                        // 아무키나 입력했을 때는 다시 계산
+                        break;
                     }
                 }
             }
         } catch (Exception e) {
             System.out.println("종료합니다.");
         }
-
-//            //최근 결과 삭제
-//            System.out.println("가장 먼저 저장된 연산 결과를 삭제하시겠습니까? (remove 입력 시 삭제)");
-//            removeBasket(sc, basket);
-//
-//            //컬렉션 출력
-//            System.out.println("저장된 연산결과를 조회하시겠습니까? (inquiry 입력 시 조회)");
-//            inquiryPrint(sc, basket);
-//
-//
-//            //exit 입력 시 반복문 중단
-//            System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
-//            if (exitMethod(sc)) break;
-
     }
 
     //컬렉션 출력
