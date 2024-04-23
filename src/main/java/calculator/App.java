@@ -1,7 +1,7 @@
 package calculator;
 
-import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Stack;
 
 import static java.lang.Integer.parseInt;
 
@@ -10,7 +10,7 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int result;
-        int[] intArr = new int[10];
+        Stack basket = new Stack<Integer>();
 
         while (true) {
             System.out.print("첫 번째 숫자를 입력하세요: ");
@@ -28,10 +28,15 @@ public class App {
             //operation 같은 값을 찾아서 연산후 result에 초기화
             result = calculate(operation, a, b);
             System.out.printf("%d %c %d = %d\n", a, operation, b, result);
+            //무한정 저장
+            basket.push(result);
 
-            //결과를 배열에 저장 & 10개 이상 시 오래된 결과를 지우고 새로운 결과를 끝으로
-            getCount(intArr, result);
-            System.out.println(Arrays.toString(intArr));
+            //컬렉션 출력
+            printBasket(basket);
+
+            //최근 결과 삭제
+            System.out.println("가장 먼저 저장된 연산 결과를 삭제하시겠습니까? (remove 입력 시 삭제)");
+            removeBasket(sc, basket);
 
             //exit 입력 시 반복문 중단
             if (extracted(sc)) break;
@@ -39,29 +44,42 @@ public class App {
 
     }
 
+    //컬렉션 출력
+    private static void printBasket(Stack basket) {
+        System.out.print("basket = ");
+        for (Object o : basket) System.out.print(o + ", ");
+        System.out.println();
+    }
+
+    //삭제 여부
+    private static void removeBasket(Scanner sc, Stack basket) {
+        String remove = sc.nextLine();
+        if (remove.equals("remove")) {
+            int removeNum = (int)basket.pop();
+            System.out.println(removeNum + " 삭제되었습니다.");
+        } else System.out.println("삭제되지 않았습니다.");
+    }
+
     //exit 입력 시 반복문 중단
     private static boolean extracted(Scanner sc) {
         System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
         String exit;
         exit = sc.nextLine();
-        if (exit.equals("exit")) {
-            return true;
-        }
-        return false;
+        return exit.equals("exit");
     }
 
     //결과를 배열에 저장 & 10개 이상 시 오래된 결과를 지우고 새로운 결과를 끝으로
-    private static void getCount(int[] intArr, int result) {
-        if (count >= 10) {
-            for (int i = 0; i < 9; i++) {
-                intArr[i] = intArr[i+1];
-            }
-            intArr[9] = result;
-            count++;
-        } else {
-            intArr[count++] = result;
-        }
-    }
+//    private static void getCount(int[] intArr , int result) {
+//        if (count >= 10) {
+//            for (int i = 0; i < 9; i++) {
+//                intArr[i] = intArr[i+1];
+//            }
+//            intArr[9] = result;
+//            count++;
+//        } else {
+//            intArr[count++] = result;
+//        }
+//    }
 
     //switch문을 사용해서 사칙연산중 하나를 골라 연산
     private static int calculate(char operation, int a, int b) {
