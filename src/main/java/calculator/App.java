@@ -1,5 +1,7 @@
 package calculator;
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Scanner;
 import java.util.Stack;
 
@@ -10,7 +12,7 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int result;
-        Stack basket = new Stack<Integer>();
+        Deque<Integer> basket = new ArrayDeque<Integer>();
 
         while (true) {
             System.out.print("첫 번째 숫자를 입력하세요: ");
@@ -45,14 +47,14 @@ public class App {
     }
 
     //컬렉션 출력
-    private static void printBasket(Stack basket) {
+    private static void printBasket(Deque<Integer> basket) {
         System.out.print("basket = ");
         for (Object o : basket) System.out.print(o + ", ");
         System.out.println();
     }
 
     //삭제 여부
-    private static void removeBasket(Scanner sc, Stack basket) {
+    private static void removeBasket(Scanner sc, Deque<Integer> basket) {
         String remove = sc.nextLine();
         if (remove.equals("remove")) {
             int removeNum = (int)basket.pop();
@@ -67,19 +69,6 @@ public class App {
         exit = sc.nextLine();
         return exit.equals("exit");
     }
-
-    //결과를 배열에 저장 & 10개 이상 시 오래된 결과를 지우고 새로운 결과를 끝으로
-//    private static void getCount(int[] intArr , int result) {
-//        if (count >= 10) {
-//            for (int i = 0; i < 9; i++) {
-//                intArr[i] = intArr[i+1];
-//            }
-//            intArr[9] = result;
-//            count++;
-//        } else {
-//            intArr[count++] = result;
-//        }
-//    }
 
     //switch문을 사용해서 사칙연산중 하나를 골라 연산
     private static int calculate(char operation, int a, int b) {
