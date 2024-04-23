@@ -1,5 +1,6 @@
 package calculator;
 
+import java.util.Arrays;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
@@ -8,6 +9,8 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int result;
+        int[] intArr = new int[10];
+        int count = 0;
 
         while (true) {
             System.out.print("첫 번째 숫자를 입력하세요: ");
@@ -25,6 +28,10 @@ public class App {
             //operation 같은 값을 찾아서 연산후 result에 초기화
             result = calculate(operation, a, b);
             System.out.printf("%d %c %d = %d\n", a, operation, b, result);
+
+            //결과를 배열에 저장
+            intArr[count++] = result;
+            System.out.println(Arrays.toString(intArr));
 
             //exit 입력 시 반복문 중단
             System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
@@ -63,10 +70,16 @@ public class App {
     }
 
     //사용자에게 0이상의 정수를 받는 메서드(음수일때 반복해서 값을 요청)
+    // 숫자 타입이 아닌 예외 발생시 다시 요청
     static int typeCheck(Scanner sc) {
-        int a;
+        int a = -1;
         do {
-            a = parseInt(sc.nextLine());//sc,nextInt() 인한 스킵현상으로 변경
+            try {
+                a = parseInt(sc.nextLine());//sc,nextInt() 인한 스킵현상으로 변경
+            } catch (NumberFormatException e) {
+                System.out.println("0을 포함한 양수를 입력해 주세요");
+                continue;
+            }
             if (a < 0) {
                 System.out.println("0을 포함한 양수를 입력해 주세요");
             }
