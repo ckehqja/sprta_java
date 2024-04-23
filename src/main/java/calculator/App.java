@@ -6,11 +6,11 @@ import java.util.Scanner;
 import static java.lang.Integer.parseInt;
 
 public class App {
+    static int count = 0;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int result;
         int[] intArr = new int[10];
-        int count = 0;
 
         while (true) {
             System.out.print("첫 번째 숫자를 입력하세요: ");
@@ -29,17 +29,38 @@ public class App {
             result = calculate(operation, a, b);
             System.out.printf("%d %c %d = %d\n", a, operation, b, result);
 
-            //결과를 배열에 저장
-            intArr[count++] = result;
+            //결과를 배열에 저장 & 10개 이상 시 오래된 결과를 지우고 새로운 결과를 끝으로
+            getCount(intArr, result);
             System.out.println(Arrays.toString(intArr));
 
             //exit 입력 시 반복문 중단
-            System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
-            String exit;
-            exit = sc.nextLine();
-            if (exit.equals("exit")) {break;}
+            if (extracted(sc)) break;
         }
 
+    }
+
+    //exit 입력 시 반복문 중단
+    private static boolean extracted(Scanner sc) {
+        System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
+        String exit;
+        exit = sc.nextLine();
+        if (exit.equals("exit")) {
+            return true;
+        }
+        return false;
+    }
+
+    //결과를 배열에 저장 & 10개 이상 시 오래된 결과를 지우고 새로운 결과를 끝으로
+    private static void getCount(int[] intArr, int result) {
+        if (count >= 10) {
+            for (int i = 0; i < 9; i++) {
+                intArr[i] = intArr[i+1];
+            }
+            intArr[9] = result;
+            count++;
+        } else {
+            intArr[count++] = result;
+        }
     }
 
     //switch문을 사용해서 사칙연산중 하나를 골라 연산
