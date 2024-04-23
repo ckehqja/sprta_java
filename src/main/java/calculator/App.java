@@ -12,39 +12,63 @@ public class App {
         int result;
         Deque<Integer> basket = new ArrayDeque<>();
 
-        while (true) {
-            System.out.print("첫 번째 숫자를 입력하세요: ");
-            // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
-            int a = typeCheck(sc);
+        try {
+            while (true) {
+                System.out.print("첫 번째 숫자를 입력하세요: ");
+                // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
+                int a = typeCheck(sc);
 
-            System.out.print("두 번째 숫자를 입력하세요: ");
-            // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
-            int b = typeCheck(sc);
+                System.out.print("두 번째 숫자를 입력하세요: ");
+                // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
+                int b = typeCheck(sc);
 
-            // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다.
-            System.out.print("사칙연산 기호를 입력하세요: ");
-            char operation = operationCheck(sc);
+                // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다.
+                System.out.print("사칙연산 기호를 입력하세요: ");
+                char operation = operationCheck(sc);
 
-            //operation 같은 값을 찾아서 연산후 result에 초기화
-            result = calculate(operation, a, b);
-            System.out.printf("%d %c %d = %d\n", a, operation, b, result);
-            //무한정 저장
-            basket.push(result);
-            
+                //operation 같은 값을 찾아서 연산후 result에 초기화
+                result = calculate(operation, a, b);
+                System.out.printf("%d %c %d = %d\n", a, operation, b, result);
+                //무한정 저장
+                basket.push(result);
 
-            //최근 결과 삭제
-            System.out.println("가장 먼저 저장된 연산 결과를 삭제하시겠습니까? (remove 입력 시 삭제)");
-            removeBasket(sc, basket);
+                System.out.println("최근 연산 결과 삭제 re, 연산결과 조회 in, 종료 ex, 계속 아무키나 입력");
+                String res = sc.nextLine();
 
-            //컬렉션 출력
-            System.out.println("저장된 연산결과를 조회하시겠습니까? (inquiry 입력 시 조회)");
-            inquiryPrint(sc, basket);
-
-
-            //exit 입력 시 반복문 중단
-            System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
-            if (exitMethod(sc)) break;
+                switch (res) {
+                    case "re" -> {
+                        Integer reNum = basket.pop();
+                        System.out.println(reNum + "삭제되었습니다.");
+                    }
+                    case "in" -> {
+                        System.out.print("basket = [ ");
+                        for (Integer i : basket) {
+                            System.out.print(i + ", ");
+                            System.out.println(" ] ");
+                        }
+                    }
+                    case "ex" -> {
+                        throw new Exception("exit");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("종료합니다.");
         }
+
+//            //최근 결과 삭제
+//            System.out.println("가장 먼저 저장된 연산 결과를 삭제하시겠습니까? (remove 입력 시 삭제)");
+//            removeBasket(sc, basket);
+//
+//            //컬렉션 출력
+//            System.out.println("저장된 연산결과를 조회하시겠습니까? (inquiry 입력 시 조회)");
+//            inquiryPrint(sc, basket);
+//
+//
+//            //exit 입력 시 반복문 중단
+//            System.out.println("더 계산하시겠습니까? (exit 입력 시 종료)");
+//            if (exitMethod(sc)) break;
+
     }
 
     //컬렉션 출력
