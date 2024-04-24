@@ -1,5 +1,6 @@
 package calculator;
 
+import java.util.ArrayDeque;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
@@ -8,7 +9,7 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         double result;
-        Calculator calculator = new Calculator();
+        Calculator calculator = new Calculator(new ArrayDeque<>());
 
         aPoint:
         while (true) {

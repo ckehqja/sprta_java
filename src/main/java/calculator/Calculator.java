@@ -1,10 +1,13 @@
 package calculator;
 
-import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class Calculator {
-    private Deque<Double> basket = new ArrayDeque<>();
+    final private Deque<Double> basket;
+
+    public Calculator(Deque<Double> basket) {
+        this.basket = basket;
+    }
 
 
     //바스켓이 비어있는지 확인
