@@ -12,37 +12,43 @@ public class App {
         int result;
         Deque<Integer> basket = new ArrayDeque<>();
 
-        try {
+        aPoint:
+        while (true) {
+            System.out.print("첫 번째 숫자를 입력하세요: ");
+            // Scanner 를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
+            int a = typeCheck(sc);
+
+            System.out.print("두 번째 숫자를 입력하세요: ");
+            // Scanner 를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
+            int b = typeCheck(sc);
+
+            // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다.
+            System.out.print("사칙연산 기호를 입력하세요: ");
+            char operation = operationCheck(sc);
+
+            //operation 같은 값을 찾아서 연산후 result 에 초기화
+            result = calculate(operation, a, b);
+            System.out.printf("%d %c %d = %d\n", a, operation, b, result);
+            //무한정 저장
+            basket.push(result);
+
+
+            bPoint:
             while (true) {
-                System.out.print("첫 번째 숫자를 입력하세요: ");
-                // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
-                int a = typeCheck(sc);
+                System.out.println("최근 연산 결과 삭제 re, 연산결과 조회 in, 종료 ex, 계속 아무키나 입력");
+                String res = sc.nextLine();
 
-                System.out.print("두 번째 숫자를 입력하세요: ");
-                // Scanner를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
-                int b = typeCheck(sc);
-
-                // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다.
-                System.out.print("사칙연산 기호를 입력하세요: ");
-                char operation = operationCheck(sc);
-
-                //operation 같은 값을 찾아서 연산후 result에 초기화
-                result = calculate(operation, a, b);
-                System.out.printf("%d %c %d = %d\n", a, operation, b, result);
-                //무한정 저장
-                basket.push(result);
-
-
-
-                while(true) {
-                    System.out.println("최근 연산 결과 삭제 re, 연산결과 조회 in, 종료 ex, 계속 아무키나 입력");
-                    String res = sc.nextLine();
-
-                    if (res.equals("re")) {
+                switch (res) {
+                    case "re":
                         //최근 결과 삭제
-                        Integer reNum = basket.pop();
-                        System.out.println(reNum + "삭제되었습니다.");
-                    } else if (res.equals("in")) {
+                        if (basket.isEmpty()) {
+                            System.out.println("Basket is empty.");
+                        } else {
+                            Integer reNum = basket.pop();
+                            System.out.println(reNum + "삭제되었습니다.");
+                        }
+                        break;
+                    case "in":
                         //결과 리스트
                         System.out.print("basket = [ ");
                         for (Integer i : basket) {
@@ -50,17 +56,14 @@ public class App {
                         }
                         System.out.println(" ] ");
 
-                    } else if (res.equals("ex")) {
-                        //오류를 발생시켜 전체 종료
-                        throw new Exception("exit");
-                    } else {
-                        // 아무키나 입력했을 때는 다시 계산
                         break;
-                    }
+                    case "ex":
+                        break aPoint;
+                    default:
+                        // 아무키나 입력했을 때는 다시 계산
+                        break bPoint;
                 }
             }
-        } catch (Exception e) {
-            System.out.println("종료합니다.");
         }
     }
 
@@ -68,13 +71,6 @@ public class App {
     private static void inquiryPrint(Scanner sc, Deque<Integer> basket) {
         String inquiry = sc.nextLine();
         if (inquiry.equals("inquiry")) printBasket(basket);
-    }
-
-    //컬렉션 출력
-    private static void printBasket(Deque<Integer> basket) {
-        System.out.print("basket = ");
-        for (Object o : basket) System.out.print(o + ", ");
-        System.out.println();
     }
 
     //삭제 여부
@@ -93,7 +89,14 @@ public class App {
         return exit.equals("exit");
     }
 
-    //switch문을 사용해서 사칙연산중 하나를 골라 연산
+    //컬렉션 출력
+    private static void printBasket(Deque<Integer> basket) {
+        System.out.print("basket = ");
+        for (Object o : basket) System.out.print(o + ", ");
+        System.out.println();
+    }
+
+    //switch 문을 사용해서 사칙연산중 하나를 골라 연산
     private static int calculate(char operation, int a, int b) {
         int result;
         result = switch (operation) {
