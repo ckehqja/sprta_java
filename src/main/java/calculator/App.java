@@ -9,8 +9,8 @@ import static java.lang.Integer.parseInt;
 public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int result;
-        Deque<Integer> basket = new ArrayDeque<>();
+        double result;
+        Calculator calculator = new Calculator();
 
         aPoint:
         while (true) {
@@ -26,12 +26,12 @@ public class App {
             System.out.print("사칙연산 기호를 입력하세요: ");
             char operation = operationCheck(sc);
 
-            //operation 같은 값을 찾아서 연산후 result 에 초기화
-            result = calculate(operation, a, b);
-            System.out.printf("%d %c %d = %d\n", a, operation, b, result);
-            //무한정 저장
-            basket.push(result);
+            result = calculator.calculate(a, b, operation);
 
+            //operation 같은 값을 찾아서 연산후 result 에 초기화
+            System.out.printf("%d %c %d = %f\n", a, operation, b, result);
+            //무한정 저장
+            calculator.setBasket(result);
 
             bPoint:
             while (true) {
@@ -40,21 +40,18 @@ public class App {
 
                 switch (res) {
                     case "re":
-                        //최근 결과 삭제
-                        if (basket.isEmpty()) {
-                            System.out.println("Basket is empty.");
+                        //최근 결과 삭제 & 비였으면 문자 출력
+                        if (calculator.isBasketEmpty()) {
+                            System.out.println("Basket is empty");
                         } else {
-                            Integer reNum = basket.pop();
+                            double reNum = calculator.getBasket();
                             System.out.println(reNum + "삭제되었습니다.");
                         }
+
                         break;
                     case "in":
                         //결과 리스트
-                        System.out.print("basket = [ ");
-                        for (Integer i : basket) {
-                            System.out.print(i + ", ");
-                        }
-                        System.out.println(" ] ");
+                        calculator.printBasket();
 
                         break;
                     case "ex":
@@ -65,48 +62,6 @@ public class App {
                 }
             }
         }
-    }
-
-    //컬렉션 출력
-    private static void inquiryPrint(Scanner sc, Deque<Integer> basket) {
-        String inquiry = sc.nextLine();
-        if (inquiry.equals("inquiry")) printBasket(basket);
-    }
-
-    //삭제 여부
-    private static void removeBasket(Scanner sc, Deque<Integer> basket) {
-        String remove = sc.nextLine();
-        if (remove.equals("remove")) {
-            int removeNum = basket.pop();
-            System.out.println(removeNum + " 삭제되었습니다.");
-        } else System.out.println("삭제되지 않았습니다.");
-    }
-
-    //exit 입력 시 반복문 중단
-    private static boolean exitMethod(Scanner sc) {
-        String exit;
-        exit = sc.nextLine();
-        return exit.equals("exit");
-    }
-
-    //컬렉션 출력
-    private static void printBasket(Deque<Integer> basket) {
-        System.out.print("basket = ");
-        for (Object o : basket) System.out.print(o + ", ");
-        System.out.println();
-    }
-
-    //switch 문을 사용해서 사칙연산중 하나를 골라 연산
-    private static int calculate(char operation, int a, int b) {
-        int result;
-        result = switch (operation) {
-            case '+' -> a + b;
-            case '-' -> a - b;
-            case '*' -> a * b;
-            case '/' -> a / b;
-            default -> throw new IllegalStateException("Unexpected value: " + operation);
-        };
-        return result;
     }
 
     //입력받은 값을 사칙연상중 하나 확인하고 반환
