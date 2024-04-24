@@ -1,7 +1,5 @@
 package calculator;
 
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
@@ -26,12 +24,12 @@ public class App {
             System.out.print("사칙연산 기호를 입력하세요: ");
             char operation = operationCheck(sc);
 
+            //계산한 후 내부적으로 저장한 후 결과값만 반환
             result = calculator.calculate(a, b, operation);
 
             //operation 같은 값을 찾아서 연산후 result 에 초기화
             System.out.printf("%d %c %d = %f\n", a, operation, b, result);
             //무한정 저장
-            calculator.setBasket(result);
 
             bPoint:
             while (true) {
@@ -44,20 +42,16 @@ public class App {
                         if (calculator.isBasketEmpty()) {
                             System.out.println("Basket is empty");
                         } else {
-                            double reNum = calculator.getBasket();
+                            double reNum = calculator.removeResult();
                             System.out.println(reNum + "삭제되었습니다.");
                         }
-
                         break;
-                    case "in":
-                        //결과 리스트
-                        calculator.printBasket();
-
+                    case "in": //결과 리스트
+                        calculator.inquiryResults();
                         break;
-                    case "ex":
+                    case "ex": //종료
                         break aPoint;
-                    default:
-                        // 아무키나 입력했을 때는 다시 계산
+                    default:// 아무키나 입력했을 때는 다시 계산
                         break bPoint;
                 }
             }

@@ -6,13 +6,14 @@ import java.util.Deque;
 public class Calculator {
     private Deque<Double> basket = new ArrayDeque<>();
 
+
     //바스켓이 비어있는지 확인
     public boolean isBasketEmpty() {
         return basket.isEmpty();
     }
 
     //바스켓 최근꺼 하나 꺼내기
-    public double getBasket() {
+    public double removeResult() {
         if (isBasketEmpty()) {
             System.out.println("Basket is empty");
             return 0;
@@ -20,13 +21,9 @@ public class Calculator {
         return basket.pop();
 
     }
-    //바스케에 하나 추가하기
-    public void setBasket(double result) {
-        basket.push(result);
-    }
 
     //바스켓 전부 출력
-    public void printBasket() {
+    public void inquiryResults() {
         System.out.print("basket = [ ");
         for (Double v : basket) {
             System.out.print(v + ", ");
@@ -37,7 +34,7 @@ public class Calculator {
 
     //계산
     public double calculate(int a, int b, char op) {
-        return switch (op) {
+        double result = switch (op) {
             case '+' -> a + b;
             case '-' -> a - b;
             case '*' -> a * b;
@@ -47,5 +44,7 @@ public class Calculator {
             }
             default -> throw new IllegalArgumentException("Invalid operator: " + op);
         };
+        basket.push(result);
+        return result;
     }
 }
