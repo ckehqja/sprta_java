@@ -9,7 +9,9 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         double result;
-        Calculator calculator = new Calculator(new ArrayDeque<>(), new ArrayDeque<>());
+        ArithmeticCalculator arithCal = new ArithmeticCalculator(new ArrayDeque<>());
+        CircleCalculator circleCal = new CircleCalculator(new ArrayDeque<>());
+
 
         aPoint:
         while (true) {
@@ -22,7 +24,7 @@ public class App {
                 double radius = typeCheck(sc);
 
                 //넓이를 계산하고 calculator 내부적으로 저장
-                double area = calculator.CircleArea(radius);
+                double area = circleCal.calculate(radius);
                 System.out.println("area = " + area);
 
             } else if (in.equals("2")) {//사칙 연산
@@ -40,7 +42,7 @@ public class App {
                 char operation = operationCheck(sc);
 
                 //계산한 후 내부적으로 저장한 후 결과값만 반환
-                result = calculator.calculate(a, b, operation);
+                result = arithCal.calculate(a, b, operation);
 
                 //operation 같은 값을 찾아서 연산후 result 에 초기화
                 System.out.printf("%d %c %d = %f\n", a, operation, b, result);
@@ -55,25 +57,25 @@ public class App {
                 switch (res) {
                     case "re":
                         //최근 결과 삭제 & 비였으면 문자 출력
-                        if (calculator.isBasketEmpty()) {
+                        if (arithCal.isBasketEmpty()) {
                             System.out.println("Basket is empty");
                         } else {
-                            double reNum = calculator.removeResult();
+                            double reNum = arithCal.removeResult();
                             System.out.println(reNum + "삭제되었습니다.");
                         }
                         break;
                     case "cre":
                         //최근 결과 삭제 & 비였으면 문자 출력
-                        if (calculator.isCircleBasketEmpty()) {
+                        if (circleCal.isBasketEmpty()) {
                             System.out.println("CircleBasketEmpty is empty");
                         } else {
-                            double reNum = calculator.c_removeResult();
+                            double reNum = circleCal.removeResult();
                             System.out.println(reNum + "삭제되었습니다.");
                         }
                         break;
                     case "in": //결과 리스트
-                        calculator.inquiryResults();
-                        calculator.printCircleArea();
+                        arithCal.inquiryResults();
+                        circleCal.inquiryResults();
                         break;
                     case "ex": //종료
                         break aPoint;
