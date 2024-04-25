@@ -9,25 +9,39 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         double result;
+
+        Calculator calculator;
         ArithmeticCalculator arithCal = new ArithmeticCalculator(new ArrayDeque<>());
         CircleCalculator circleCal = new CircleCalculator(new ArrayDeque<>());
 
 
+
         aPoint:
         while (true) {
-            System.out.println("원의 넓이 1, 사칙연산 2 입력>");
-            String in = sc.nextLine();
 
-            if (in.equals("1")) {//원 넓이
+            while(true) {
+
+                System.out.println("원의 넓이 1, 사칙연산 2 입력>");
+                String in = sc.nextLine();
+                if (in.equals("1")) {
+                    calculator = circleCal;
+                    break;
+                } else if (in.equals("2")) {
+                    calculator = arithCal;
+                    break;
+                }
+            }
+            if (calculator instanceof CircleCalculator) {//원 넓이
                 //반지름을 입력받고
                 System.out.print("반지름을 입력하세요: ");
                 double radius = typeCheck(sc);
 
                 //넓이를 계산하고 calculator 내부적으로 저장
-                double area = circleCal.calculate(radius);
+                double area = calculator.calculate(radius);
                 System.out.println("area = " + area);
 
-            } else if (in.equals("2")) {//사칙 연산
+            }
+            if (calculator instanceof ArithmeticCalculator) {//사칙 연산
 
                 System.out.print("첫 번째 숫자를 입력하세요: ");
                 // Scanner 를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
@@ -42,7 +56,7 @@ public class App {
                 char operation = operationCheck(sc);
 
                 //계산한 후 내부적으로 저장한 후 결과값만 반환
-                result = arithCal.calculate(a, b, operation);
+                result = calculator.calculate(a, b, operation);
 
                 //operation 같은 값을 찾아서 연산후 result 에 초기화
                 System.out.printf("%d %c %d = %f\n", a, operation, b, result);
@@ -51,25 +65,16 @@ public class App {
 
             bPoint:
             while (true) {
-                System.out.println("최근 연산 결과 삭제 re,최근 원 넓이 결과 삭제 cre, 연산결과 조회 in, 종료 ex, 계속 아무키나 입력");
+                System.out.println("최근 연산 결과 삭제 re, 연산결과 조회 in, 종료 ex, 계속 아무키나 입력");
                 String res = sc.nextLine();
 
                 switch (res) {
                     case "re":
                         //최근 결과 삭제 & 비였으면 문자 출력
-                        if (arithCal.isBasketEmpty()) {
+                        if (calculator.isBasketEmpty()) {
                             System.out.println("Basket is empty");
                         } else {
-                            double reNum = arithCal.removeResult();
-                            System.out.println(reNum + "삭제되었습니다.");
-                        }
-                        break;
-                    case "cre":
-                        //최근 결과 삭제 & 비였으면 문자 출력
-                        if (circleCal.isBasketEmpty()) {
-                            System.out.println("CircleBasketEmpty is empty");
-                        } else {
-                            double reNum = circleCal.removeResult();
+                            double reNum = calculator.removeResult();
                             System.out.println(reNum + "삭제되었습니다.");
                         }
                         break;
