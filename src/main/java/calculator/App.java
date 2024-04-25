@@ -9,32 +9,47 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         double result;
-        Calculator calculator = new Calculator(new ArrayDeque<>());
+        Calculator calculator = new Calculator(new ArrayDeque<>(), new ArrayDeque<>());
 
         aPoint:
         while (true) {
-            System.out.print("첫 번째 숫자를 입력하세요: ");
-            // Scanner 를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
-            int a = typeCheck(sc);
+            System.out.println("원의 넓이 1, 사칙연산 2 입력>");
+            String in = sc.nextLine();
 
-            System.out.print("두 번째 숫자를 입력하세요: ");
-            // Scanner 를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
-            int b = typeCheck(sc);
+            if (in.equals("1")) {//원 넓이
+                //반지름을 입력받고
+                System.out.print("반지름을 입력하세요: ");
+                double radius = typeCheck(sc);
 
-            // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다.
-            System.out.print("사칙연산 기호를 입력하세요: ");
-            char operation = operationCheck(sc);
+                //넓이를 계산하고 calculator 내부적으로 저장
+                double area = calculator.CircleArea(radius);
+                System.out.println("area = " + area);
 
-            //계산한 후 내부적으로 저장한 후 결과값만 반환
-            result = calculator.calculate(a, b, operation);
+            } else if (in.equals("2")) {//사칙 연산
 
-            //operation 같은 값을 찾아서 연산후 result 에 초기화
-            System.out.printf("%d %c %d = %f\n", a, operation, b, result);
-            //무한정 저장
+                System.out.print("첫 번째 숫자를 입력하세요: ");
+                // Scanner 를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
+                int a = typeCheck(sc);
+
+                System.out.print("두 번째 숫자를 입력하세요: ");
+                // Scanner 를 사용하여 양의 정수를 입력받고 적합한 타입의 변수에 저장합니다.
+                int b = typeCheck(sc);
+
+                // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다.
+                System.out.print("사칙연산 기호를 입력하세요: ");
+                char operation = operationCheck(sc);
+
+                //계산한 후 내부적으로 저장한 후 결과값만 반환
+                result = calculator.calculate(a, b, operation);
+
+                //operation 같은 값을 찾아서 연산후 result 에 초기화
+                System.out.printf("%d %c %d = %f\n", a, operation, b, result);
+                //무한정 저장
+            }
 
             bPoint:
             while (true) {
-                System.out.println("최근 연산 결과 삭제 re, 연산결과 조회 in, 종료 ex, 계속 아무키나 입력");
+                System.out.println("최근 연산 결과 삭제 re,최근 원 넓이 결과 삭제 cre, 연산결과 조회 in, 종료 ex, 계속 아무키나 입력");
                 String res = sc.nextLine();
 
                 switch (res) {
@@ -47,8 +62,18 @@ public class App {
                             System.out.println(reNum + "삭제되었습니다.");
                         }
                         break;
+                    case "cre":
+                        //최근 결과 삭제 & 비였으면 문자 출력
+                        if (calculator.isCircleBasketEmpty()) {
+                            System.out.println("CircleBasketEmpty is empty");
+                        } else {
+                            double reNum = calculator.c_removeResult();
+                            System.out.println(reNum + "삭제되었습니다.");
+                        }
+                        break;
                     case "in": //결과 리스트
                         calculator.inquiryResults();
+                        calculator.printCircleArea();
                         break;
                     case "ex": //종료
                         break aPoint;
