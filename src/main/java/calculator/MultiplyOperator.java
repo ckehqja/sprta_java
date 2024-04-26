@@ -1,7 +1,7 @@
 package calculator;
 
-public class MultiplyOperator {
-    public double calculate(int a, int b) {
+public class MultiplyOperator implements Operator  {
+    public double operate(int a, int b) {
         return a * b;
     }
 }
