@@ -6,6 +6,10 @@ public abstract class Calculator {
 
     //사칙연산 결과를 담는 컬렉션 자손까지 물려받으라고 protected
     protected Deque<Double> basket;
+    AddOperator addOp = new AddOperator();
+    SubtractOperator subOp = new SubtractOperator();
+    MultiplyOperator mulOp = new MultiplyOperator();
+    DivideOperator divOp = new DivideOperator();
 
     //생성자 시점에서 초기화되는 컬렉션들
     public Calculator(Deque<Double> basket) {

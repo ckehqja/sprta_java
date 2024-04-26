@@ -3,6 +3,7 @@ package calculator;
 import java.util.Deque;
 
 public class ArithmeticCalculator extends Calculator{
+
     public ArithmeticCalculator(Deque<Double> basket) {
         super(basket);
     }
@@ -11,12 +12,12 @@ public class ArithmeticCalculator extends Calculator{
     //계산
     public double calculate(int a, int b, char op) {
         double result = switch (op) {
-            case '+' -> a + b;
-            case '-' -> a - b;
-            case '*' -> a * b;
+            case '+' -> addOp.calculate(a, b);
+            case '-' -> subOp.calculate(a, b);
+            case '*' -> mulOp.calculate(a, b);
             case '/' -> {
                 if (b == 0) throw new ArithmeticException("Division by zero");
-                else yield (double) a / b;
+                else yield divOp.calculate(a, b);
             }
             default -> throw new IllegalArgumentException("Invalid operator: " + op);
         };
