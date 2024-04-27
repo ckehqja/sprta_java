@@ -1,6 +1,7 @@
 package calculator;
 
 import java.util.ArrayDeque;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 import static java.lang.Integer.parseInt;
@@ -9,8 +10,9 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         double result;
-        ArithmeticCalculator arithCal = new ArithmeticCalculator(new ArrayDeque<>());
-        CircleCalculator circleCal = new CircleCalculator(new ArrayDeque<>());
+        //추가 삭제에는 Array 보다는 Linked가 더유리하무로 수정
+        ArithmeticCalculator arithCal = new ArithmeticCalculator(new LinkedList<>());
+        CircleCalculator circleCal = new CircleCalculator(new LinkedList<>());
 
 
         aPoint:
@@ -23,8 +25,11 @@ public class App {
                 System.out.print("반지름을 입력하세요: ");
                 double radius = typeCheck(sc);
 
+                //연산할 값을 세팅
+                circleCal.circleSet(radius);
+
                 //넓이를 계산하고 calculator 내부적으로 저장
-                double area = circleCal.calculate(radius);
+                double area = circleCal.calculate();
                 System.out.println("area = " + area);
 
             } else if (in.equals("2")) {//사칙 연산
@@ -40,9 +45,13 @@ public class App {
                 // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다.
                 System.out.print("사칙연산 기호를 입력하세요: ");
                 char operation = operationCheck(sc);
+                arithCal.arithSetter(a, b, operation);
+
+                //연산할 값들을 세팅해줍니다.
+                arithCal.arithSetter(a, b, operation);
 
                 //계산한 후 내부적으로 저장한 후 결과값만 반환
-                result = arithCal.calculate(a, b, operation);
+                result = arithCal.calculate();
 
                 //operation 같은 값을 찾아서 연산후 result 에 초기화
                 System.out.printf("%d %c %d = %f\n", a, operation, b, result);
@@ -51,7 +60,7 @@ public class App {
 
             bPoint:
             while (true) {
-                System.out.println("최근 연산 결과 삭제 re,최근 원 넓이 결과 삭제 cre, 연산결과 조회 in, 종료 ex, 계속 아무키나 입력");
+                System.out.println("가장 먼저 저장된 결과 삭제 (사칙연산 re, 원 cre), 조회 in, 종료 ex, 계속 아무키나 입력");
                 String res = sc.nextLine();
 
                 switch (res) {
@@ -93,7 +102,9 @@ public class App {
         do {
             System.out.println("사칙연산 중 하나를 입력해주세요(-, +, *, /, %");
             operations = sc.nextLine().charAt(0); //sc.next() 인한 스킵현상으로 변경
-            if (operations == '+' || operations == '-' || operations == '*' || operations == '/' || operations == '%') {
+            boolean isOperationList = operations == '+' || operations == '-' || operations == '*' || operations == '/' || operations == '%';
+
+            if (isOperationList) {
                 isOperation = true;
             }
         } while (!isOperation);

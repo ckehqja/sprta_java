@@ -6,14 +6,13 @@ public abstract class Calculator {
 
     //사칙연산 결과를 담는 컬렉션 자손까지 물려받으라고 protected
     protected Deque<Double> basket;
-    protected Operator operator;
 
     //생성자 시점에서 초기화되는 컬렉션들
     public Calculator(Deque<Double> basket) {
         this.basket = basket;
     }
 
-
+    public abstract double calculate();
     public Deque<Double> getBasket() {
         return basket;
     }
@@ -28,14 +27,13 @@ public abstract class Calculator {
     }
 
 
-    //바스켓 최근꺼 하나 꺼내기 getter
+    //바스켓 가장 먼저 저장된 값 꺼내기 getter
     public double removeResult() {
         if (isBasketEmpty()) {
             System.out.println("Basket is empty");
             return 0;
         }
-        return basket.pop();
-
+        return basket.pollLast();
     }
 
     //바스켓 전부 출력
