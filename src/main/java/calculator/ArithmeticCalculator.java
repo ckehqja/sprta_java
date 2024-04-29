@@ -29,7 +29,7 @@ public class ArithmeticCalculator<T> extends Calculator {
         } else if (op == OperatorType.MULTIPLY.getOp()) {
             result = new MultiplyOperator().operate(a, b);
         } else if (op == OperatorType.DIVIDE.getOp()) {
-            if ((Double)b == (Double)0.0) throw new ArithmeticException("Division by zero");
+            if (b == (Double)0.0) throw new ArithmeticException("Division by zero");
             else result = new DivideOperator().operate(a, b);
         } else if (op == OperatorType.MOD.getOp()) {
             result = new ModOperator().operate(a, b);

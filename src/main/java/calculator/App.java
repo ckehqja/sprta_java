@@ -21,7 +21,6 @@ public class App {
 
             if (in.equals("1")) {
                 circleArea(sc, circleCal);
-
             } else if (in.equals("2")) {
                 arithmetic(sc, arithCal);
             }
