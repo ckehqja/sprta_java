@@ -2,17 +2,17 @@ package calculator;
 
 import java.util.Deque;
 
-public class ArithmeticCalculator extends Calculator {
+public class ArithmeticCalculator<T> extends Calculator {
 
     public ArithmeticCalculator(Deque<Double> basket) {
         super(basket);
     }
 
     private Operator operator;
-    private int a, b;
+    private T a, b;
     private char op;
 
-    public void arithSetter(int a, int b, char op) {
+    public void arithSetter(T a, T b, char op) {
         this.a = a;
         this.b = b;
         this.op = op;
@@ -29,7 +29,7 @@ public class ArithmeticCalculator extends Calculator {
         } else if (op == OperatorType.MULTIPLY.getOp()) {
             result = new MultiplyOperator().operate(a, b);
         } else if (op == OperatorType.DIVIDE.getOp()) {
-            if (b == 0) throw new ArithmeticException("Division by zero");
+            if ((Double)b == (Double)0.0) throw new ArithmeticException("Division by zero");
             else result = new DivideOperator().operate(a, b);
         } else if (op == OperatorType.MOD.getOp()) {
             result = new ModOperator().operate(a, b);

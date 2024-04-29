@@ -1,7 +1,9 @@
 package calculator;
 
-public class ModOperator implements Operator  {
-    public double operate(int a, int b ) {
-        return a % b;
+public class ModOperator<Double> implements Operator<Double>  {
+
+    @Override
+    public double operate(Double a, Double b) {
+        return (double)a%(double)b;
     }
 }

@@ -1,5 +1,5 @@
 package calculator;
 
-public interface Operator {
-    double operate(int a, int b);
+public interface Operator<T> {
+    double operate(T a, T b);
 }

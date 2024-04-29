@@ -28,10 +28,10 @@ public abstract class Calculator {
 
 
     //바스켓 가장 먼저 저장된 값 꺼내기 getter
-    public double removeResult() {
+    public Double removeResult() {
         if (isBasketEmpty()) {
             System.out.println("Basket is empty");
-            return 0;
+            return null;
         }
         return basket.pollLast();
     }
