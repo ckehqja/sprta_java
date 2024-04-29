@@ -46,4 +46,17 @@ public class ArithmeticCalculator<T> extends Calculator {
         }
         System.out.println(" ] ");
     }
+
+    public void overStream(double d) {
+        System.out.print(" [ ");
+        basket.stream().filter(a-> a >= d).forEach(a-> System.out.print(a + " "));
+        System.out.println(" ] ");
+    }
+    public void underStream(double d) {
+        System.out.print(" [ ");
+        basket.stream().filter(a-> a <= d).forEach(a-> System.out.print(a + " "));
+        System.out.println(" ] ");
+    }
+
+
 }
