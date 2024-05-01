@@ -1,7 +1,9 @@
 package calculator;
 
-public class AddOperator {
-    public double operate(int a, int b) {
-        return a + b;
+public class AddOperator<Double> implements Operator<Double> {
+
+    @Override
+    public double operate(Double a, Double b) {
+        return (double)a+ (double)b;
     }
 }

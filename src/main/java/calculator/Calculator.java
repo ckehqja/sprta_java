@@ -15,7 +15,7 @@ public abstract class Calculator {
         this.basket = basket;
     }
 
-
+    public abstract double calculate();
     public Deque<Double> getBasket() {
         return basket;
     }
@@ -30,14 +30,13 @@ public abstract class Calculator {
     }
 
 
-    //바스켓 최근꺼 하나 꺼내기 getter
-    public double removeResult() {
+    //바스켓 가장 먼저 저장된 값 꺼내기 getter
+    public Double removeResult() {
         if (isBasketEmpty()) {
             System.out.println("Basket is empty");
-            return 0;
+            return null;
         }
-        return basket.pop();
-
+        return basket.pollLast();
     }
 
     //원의 넓이를 구하고 저장
