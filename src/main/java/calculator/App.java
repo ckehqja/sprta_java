@@ -13,7 +13,6 @@ public class App {
         var arithCal = new ArithmeticCalculator<Double>(new LinkedList<>());
         var circleCal = new CircleCalculator(new LinkedList<>());
 
-
         aPoint:
         while (true) {
             System.out.println("원의 넓이 1, 사칙연산 2 입력>");
@@ -90,13 +89,9 @@ public class App {
         // 사칙연산 기호를 적합한 타입으로 선언한 변수에 저장합니다.
         System.out.print("사칙연산 기호를 입력하세요: ");
         char operation = operationCheck(sc);
-        arithCal.arithSetter(a, b, operation);
-
-        //연산할 값들을 세팅해줍니다.
-        arithCal.arithSetter(a, b, operation);
 
         //계산한 후 내부적으로 저장한 후 결과값만 반환
-        result = arithCal.calculate();
+        result = arithCal.calculate(a, b, operation);
 
         //operation 같은 값을 찾아서 연산후 result 에 초기화
         System.out.printf("%f %c %f = %f\n", a, operation, b, result);
@@ -109,11 +104,8 @@ public class App {
         System.out.print("반지름을 입력하세요: ");
         double radius = typeCheck(sc);
 
-        //연산할 값을 세팅
-        circleCal.circleSet(radius);
-
         //넓이를 계산하고 calculator 내부적으로 저장
-        double area = circleCal.calculate();
+        double area = circleCal.calculate(radius);
         System.out.println("area = " + area);
     }
 

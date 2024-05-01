@@ -15,20 +15,10 @@ public abstract class Calculator {
         this.basket = basket;
     }
 
-    public abstract double calculate();
-    public Deque<Double> getBasket() {
-        return basket;
-    }
-
-    public void setBasket(Deque<Double> basket) {
-        this.basket = basket;
-    }
-
     //바스켓이 비어있는지 확인
     public boolean isBasketEmpty() {
         return basket.isEmpty();
     }
-
 
     //바스켓 가장 먼저 저장된 값 꺼내기 getter
     public Double removeResult() {
@@ -39,32 +29,6 @@ public abstract class Calculator {
         return basket.pollLast();
     }
 
-    //원의 넓이를 구하고 저장
-    public double calculate(double r) {
-        double area = PI * r * r;
-        basket.push(area);
-        return area;
-    }
-
-    //계산
-    public double calculate(int a, int b, char op) {
-        double result = switch (op) {
-            case '+' -> a + b;
-            case '-' -> a - b;
-            case '*' -> a * b;
-            case '/' -> {
-                if (b == 0) throw new ArithmeticException("Division by zero");
-                else yield (double) a / b;
-            }
-            default -> throw new IllegalArgumentException("Invalid operator: " + op);
-        };
-        basket.push(result);
-        return result;
-    }
-
-
     //바스켓 전부 출력
     public abstract void inquiryResults();
 }
-
-
