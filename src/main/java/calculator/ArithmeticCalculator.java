@@ -27,7 +27,7 @@ public class ArithmeticCalculator<T extends Number> extends Calculator {
         };
     }
 
-    //바스켓 결곽값을 추력하는 메서드
+    //바스켓 결곽값을 추력하는 메서드2
     @Override
     public void inquiryResults() {
         System.out.print("arithmetic basket = [ ");
