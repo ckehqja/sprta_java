@@ -114,7 +114,7 @@ public class App {
         boolean isOperation = false;
         char operations;
         do {
-            System.out.println("사칙연산 중 하나를 입력해주세요(-, +, *, /, %");
+            System.out.println("사칙연산 중 하나를 입력해주세요(-, +, *, /, %)");
             operations = sc.nextLine().charAt(0); //sc.next() 인한 스킵현상으로 변경
             boolean isOperationList = operations == '+' || operations == '-' || operations == '*' || operations == '/' || operations == '%';
 
